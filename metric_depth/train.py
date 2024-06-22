@@ -2,7 +2,6 @@ import argparse
 import logging
 import os
 import pprint
-import random
 
 import warnings
 import numpy as np
@@ -22,6 +21,7 @@ from util.dist_helper import setup_distributed
 from util.loss import SiLogLoss
 from util.metric import eval_depth
 from util.utils import init_log
+import secrets
 
 
 parser = argparse.ArgumentParser(description='Depth Anything V2 for Metric Depth Estimation')
@@ -123,7 +123,7 @@ def main():
             
             img, depth, valid_mask = sample['image'].cuda(), sample['depth'].cuda(), sample['valid_mask'].cuda()
             
-            if random.random() < 0.5:
+            if secrets.SystemRandom().random() < 0.5:
                 img = img.flip(-1)
                 depth = depth.flip(-1)
                 valid_mask = valid_mask.flip(-1)
